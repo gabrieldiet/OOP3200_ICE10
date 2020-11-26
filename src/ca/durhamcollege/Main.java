@@ -1,6 +1,7 @@
 package ca.durhamcollege;
 
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
 
@@ -8,34 +9,49 @@ public class Main {
     {
         Scanner keyboard = new Scanner(System.in);
         String prompt = "";
+        int NumOfPoints = 4;
 
-        // Point 1
-        Vector2D point1 = new Vector2D();
-        System.out.print("Enter the first point (x, y): ");
+        // Instantiates the collection container
+        Vector<Vector2D> points = new Vector<Vector2D>();
 
-        prompt = keyboard.nextLine();
-        var values = prompt.split(",");
-        point1.set(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+        // Builds a vector of 4 points
+        for(int i = 0; i < NumOfPoints; i++)
+        {
+            points.add(Vector2D.zero());
+        }
 
-        System.out.println("\n-------------------------------------------------------");
-        System.out.println("You Entered " + point1 + " for the first point" );
-        System.out.println("--------------------------------------------------------------\n" );
+        for (int i = 0; i < 3; i+=2)
+        {
+            System.out.print("Enter the first point (x, y): ");
+            prompt = keyboard.nextLine();
+            var values = prompt.split(",");
+            points.get(i).set(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 
-        // Point 2
-        Vector2D point2 = new Vector2D();
-        System.out.print("Enter the second point (x, y): ");
+            System.out.println("\n-------------------------------------------------------");
+            System.out.println("You Entered " + points.get(i) + " for the first point" );
+            System.out.println("--------------------------------------------------------------\n" );
 
-        prompt = keyboard.nextLine();
-        values = prompt.split(",");
-        point2.set(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+            System.out.print("Enter the second point (x, y): ");
 
-        System.out.println("\n--------------------------------------------------------------" );
-        System.out.println("You Entered " + point2 + " for the second point" );
-        System.out.println("--------------------------------------------------------------\n" );
+            prompt = keyboard.nextLine();
+            values = prompt.split(",");
+            points.get(i+1).set(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 
-        System.out.printf("Magnitude of first point is: %.3f\n", point1.getMagnitude());
-        System.out.printf("Magnitude of second point is: %.3f\n", point2.getMagnitude());
-        System.out.printf("Distance between first point and second point is: %.3f\n", Vector2D.distance(point1, point2));
+            System.out.println("\n--------------------------------------------------------------" );
+            System.out.println("You Entered " + points.get(i+1) + " for the second point" );
+            System.out.println("--------------------------------------------------------------\n" );
+
+            Vector2D randomVector2D = RandomVector.Instance().createVector2D(points.get(i), points.get(i+1));
+            System.out.println("\n-------------------------------------------------------");
+            System.out.println("The Random Vector is: " + randomVector2D.toString());
+            System.out.println("--------------------------------------------------------------\n" );
+
+            points.add(randomVector2D);
+        }
+
+        System.out.printf("Magnitude of first random point is: %.3f\n", points.get(4).getMagnitude());
+        System.out.printf("Magnitude of second random point is: %.3f\n", points.get(5).getMagnitude());
+        System.out.printf("Distance between first point and second point is: %.3f\n", Vector2D.distance(points.get(4), points.get(5)));
         System.out.println("----------------------------------------------------------\n");
 
     }
